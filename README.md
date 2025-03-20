@@ -12,3 +12,4 @@ REST API built with Express to manage parking lots.
 - Prettier
 - Nodemon
 - Boom
+- Joi

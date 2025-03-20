@@ -1,11 +1,18 @@
 import express from 'express';
 import responses from '../util/responses.js';
-import Boom from '@hapi/boom'; //TODO: Borrar
+import { joiValitadorHandler } from '../middlewares/joiValidatorHandler.js';
+import { createParkingSchema } from '../schemas/parkingSchema.js';
 
 const router = express.Router();
 
 router.get('/', getAllParkings);
-router.post('/', createParking);
+
+router.post(
+  '/',
+  joiValitadorHandler(createParkingSchema, 'body'),
+  createParking,
+);
+
 router.patch('/', updateParking);
 
 function getAllParkings(req, res, next) {
