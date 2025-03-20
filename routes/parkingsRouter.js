@@ -8,12 +8,11 @@ router.post('/', createParking);
 router.patch('/', updateParking);
 
 function getAllParkings(req, res, next) {
-  responses.success({ req, res, message: 'Obtained all parkings' });
+  responses.success({ res, message: 'Obtained all parkings' });
 }
 
 function createParking(req, res, next) {
   responses.success({
-    req,
     res,
     message: 'Created new parking lot',
     statusCode: 201,
@@ -21,7 +20,7 @@ function createParking(req, res, next) {
 }
 
 function updateParking(req, res, next) {
-  responses.success({ req, res, message: 'Updated parking', statusCode: 201 });
+  responses.success({ res, message: 'Updated parking', statusCode: 201 });
 }
 
 export default router;

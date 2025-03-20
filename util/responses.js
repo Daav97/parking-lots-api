@@ -1,5 +1,4 @@
 const success = ({
-  req,
   res,
   message = '',
   status = 'success',
@@ -15,7 +14,6 @@ const success = ({
 };
 
 const error = ({
-  req,
   res,
   message = 'Internal server error',
   status = 'error',
