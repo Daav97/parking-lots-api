@@ -1,4 +1,5 @@
 import express from 'express';
+import responses from '../util/responses.js';
 
 const router = express.Router();
 
@@ -7,15 +8,20 @@ router.post('/', createParking);
 router.patch('/', updateParking);
 
 function getAllParkings(req, res, next) {
-  res.send('Obtain all parkings');
+  responses.success({ req, res, message: 'Obtained all parkings' });
 }
 
 function createParking(req, res, next) {
-  res.send('Create new parking lot');
+  responses.success({
+    req,
+    res,
+    message: 'Created new parking lot',
+    statusCode: 201,
+  });
 }
 
 function updateParking(req, res, next) {
-  res.send('Update parking');
+  responses.success({ req, res, message: 'Updated parking', statusCode: 201 });
 }
 
 export default router;
