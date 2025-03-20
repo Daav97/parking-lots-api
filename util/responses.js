@@ -1,9 +1,9 @@
-const success = (
-  res,
-  { message = '', status = 'success', statusCode = 200, data = {} },
-) => {
+const SUCCESS_STATUS = 'success';
+const ERROR_STATUS = 'error';
+
+const success = (res, { message = '', statusCode = 200, data = {} }) => {
   res.status(statusCode).send({
-    status: status,
+    status: SUCCESS_STATUS,
     statusCode: statusCode,
     message: message,
     data: data,
@@ -12,10 +12,10 @@ const success = (
 
 const error = (
   res,
-  { message = 'Internal server error', status = 'error', statusCode = 500 },
+  { message = 'Internal server error', statusCode = 500 },
 ) => {
   res.status(statusCode).send({
-    status: status,
+    status: ERROR_STATUS,
     errorCode: statusCode,
     message: message,
   });
