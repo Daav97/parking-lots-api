@@ -46,3 +46,8 @@ export const queryParkingsSchema = Joi.object({
 export const getParkingSchema = Joi.object({
   id: id.required(),
 });
+
+export const updateParkingSchema = Joi.object({
+  contact,
+  spots,
+});

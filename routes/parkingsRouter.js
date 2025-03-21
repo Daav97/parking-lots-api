@@ -5,6 +5,7 @@ import {
   createParkingSchema,
   queryParkingsSchema,
   getParkingSchema,
+  updateParkingSchema,
 } from '../schemas/parkingSchema.js';
 import ParkingsService from '../services/parkingsService.js';
 import Boom from '@hapi/boom';
@@ -30,7 +31,12 @@ router.post(
   createParking,
 );
 
-router.patch('/', updateParking);
+router.patch(
+  '/:id',
+  joiValitadorHandler(getParkingSchema, 'params'),
+  joiValitadorHandler(updateParkingSchema, 'body'),
+  updateParking,
+);
 
 async function getAllParkings(req, res, next) {
   try {
@@ -80,8 +86,20 @@ async function createParking(req, res, next) {
   }
 }
 
-function updateParking(req, res, next) {
-  responses.success(res, { message: 'Updated parking', statusCode: 201 });
+async function updateParking(req, res, next) {
+  try {
+    const { id } = req.params;
+    const body = req.body;
+
+    const parkingUpdated = await service.update(id, body);
+    responses.success(res, {
+      message: 'Parking updated',
+      statusCode: 201,
+      data: parkingUpdated,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 export default router;

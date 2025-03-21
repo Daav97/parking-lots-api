@@ -45,6 +45,12 @@ class ParkingsService {
     }
     return parkingFound;
   }
+
+  async update(id, changes) {
+    const parkingFound = await this.findOne(id);
+    const parkingUpdated = await parkingFound.update(changes);
+    return parkingUpdated;
+  }
 }
 
 export default ParkingsService;
