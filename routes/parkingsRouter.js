@@ -30,7 +30,10 @@ async function getAllParkings(req, res, next) {
     const parkings = await service.find(req.query);
     responses.success(res, {
       message: 'Obtained all parkings',
-      data: parkings,
+      data: {
+        totalItems: parkings.length,
+        items: parkings,
+      },
     });
   } catch (error) {
     next(error);
