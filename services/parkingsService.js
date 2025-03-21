@@ -1,4 +1,5 @@
 import { sequelize } from '../libs/sequelize.js';
+import Boom from '@hapi/boom';
 
 const { models } = sequelize;
 
@@ -35,6 +36,14 @@ class ParkingsService {
       where: { name },
     });
     return foundParking;
+  }
+
+  async findOne(id) {
+    const parkingFound = await models.Parking.findByPk(id);
+    if (!parkingFound) {
+      throw Boom.notFound('Parking not found');
+    }
+    return parkingFound;
   }
 }
 

@@ -4,6 +4,7 @@ import { joiValitadorHandler } from '../middlewares/joiValidatorHandler.js';
 import {
   createParkingSchema,
   queryParkingsSchema,
+  getParkingSchema,
 } from '../schemas/parkingSchema.js';
 import ParkingsService from '../services/parkingsService.js';
 import Boom from '@hapi/boom';
@@ -15,6 +16,12 @@ router.get(
   '/',
   joiValitadorHandler(queryParkingsSchema, 'query'),
   getAllParkings,
+);
+
+router.get(
+  '/:id',
+  joiValitadorHandler(getParkingSchema, 'params'),
+  getParkingById,
 );
 
 router.post(
@@ -34,6 +41,19 @@ async function getAllParkings(req, res, next) {
         totalItems: parkings.length,
         items: parkings,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getParkingById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const parkingFound = await service.findOne(id);
+    responses.success(res, {
+      message: 'Parking found successfully',
+      data: parkingFound,
     });
   } catch (error) {
     next(error);

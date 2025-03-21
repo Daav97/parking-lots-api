@@ -13,6 +13,7 @@ const name = Joi.string().min(NAME_MIN_LENGTH).max(NAME_MAX_LENGTH);
 const spots = Joi.number().integer().min(MIN_SPOTS).max(MAX_SPOTS);
 const contact = Joi.string().pattern(/^\+?[1-9]\d{1,14}$/);
 const parkingType = Joi.string();
+const id = Joi.string().uuid();
 
 const limit = Joi.number().integer();
 const skip = Joi.number().integer();
@@ -41,3 +42,7 @@ export const queryParkingsSchema = Joi.object({
   orderBy: orderBy.valid(...VALID_PARKING_PROPERTIES),
   orderDirection: orderDirection.valid(...VALID_ORDER_TYPES),
 }).and('orderBy', 'orderDirection');
+
+export const getParkingSchema = Joi.object({
+  id: id.required(),
+});
