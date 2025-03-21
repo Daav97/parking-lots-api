@@ -8,8 +8,25 @@ class ParkingsService {
     return newParking;
   }
 
-  async find() {
-    const parkings = await models.Parking.findAll();
+  async find(query) {
+    const options = {
+      where: {},
+    };
+    const { limit, skip, orderBy, orderDirection } = query;
+
+    if (limit) {
+      options.limit = limit;
+    }
+
+    if (skip) {
+      options.offset = skip;
+    }
+
+    if (orderBy && orderDirection) {
+      options.order = [[orderBy, orderDirection]];
+    }
+
+    const parkings = await models.Parking.findAll(options);
     return parkings;
   }
 

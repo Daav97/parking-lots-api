@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { ParkingSchema } from '../db/models/parkingModel.js';
 
 const NAME_MIN_LENGTH = 3;
 const NAME_MAX_LENGTH = 50;
@@ -13,6 +14,13 @@ const spots = Joi.number().integer().min(MIN_SPOTS).max(MAX_SPOTS);
 const contact = Joi.string().pattern(/^\+?[1-9]\d{1,14}$/);
 const parkingType = Joi.string();
 
+const limit = Joi.number().integer();
+const skip = Joi.number().integer();
+const orderBy = Joi.string();
+const orderDirection = Joi.string();
+
+const VALID_ORDER_TYPES = ['asc', 'desc'];
+
 export const createParkingSchema = Joi.object({
   name: name.required(),
   spots: spots.required(),
@@ -21,3 +29,12 @@ export const createParkingSchema = Joi.object({
   }),
   parkingType: parkingType.required().valid(...VALID_PARKING_TYPES),
 });
+
+const VALID_PARKING_PROPERTIES = Object.keys(ParkingSchema);
+
+export const queryParkingsSchema = Joi.object({
+  limit,
+  skip,
+  orderBy: orderBy.valid(...VALID_PARKING_PROPERTIES),
+  orderDirection: orderDirection.valid(...VALID_ORDER_TYPES),
+}).and('orderBy', 'orderDirection');

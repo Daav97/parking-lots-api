@@ -1,14 +1,21 @@
 import express from 'express';
 import responses from '../util/responses.js';
 import { joiValitadorHandler } from '../middlewares/joiValidatorHandler.js';
-import { createParkingSchema } from '../schemas/parkingSchema.js';
+import {
+  createParkingSchema,
+  queryParkingsSchema,
+} from '../schemas/parkingSchema.js';
 import ParkingsService from '../services/parkingsService.js';
 import Boom from '@hapi/boom';
 
 const router = express.Router();
 const service = new ParkingsService();
 
-router.get('/', getAllParkings);
+router.get(
+  '/',
+  joiValitadorHandler(queryParkingsSchema, 'query'),
+  getAllParkings,
+);
 
 router.post(
   '/',
@@ -20,7 +27,7 @@ router.patch('/', updateParking);
 
 async function getAllParkings(req, res, next) {
   try {
-    const parkings = await service.find();
+    const parkings = await service.find(req.query);
     responses.success(res, {
       message: 'Obtained all parkings',
       data: parkings,
