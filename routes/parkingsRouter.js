@@ -17,8 +17,16 @@ router.post(
 
 router.patch('/', updateParking);
 
-function getAllParkings(req, res, next) {
-  responses.success(res, { message: 'Obtained all parkings' });
+async function getAllParkings(req, res, next) {
+  try {
+    const parkings = await service.find();
+    responses.success(res, {
+      message: 'Obtained all parkings',
+      data: parkings,
+    });
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function createParking(req, res, next) {
