@@ -9,8 +9,15 @@ class ParkingsService {
   }
 
   async find() {
-    const response = await models.Parking.findAll();
-    return response;
+    const parkings = await models.Parking.findAll();
+    return parkings;
+  }
+
+  async findByName(name) {
+    const foundParking = await models.Parking.findOne({
+      where: { name },
+    });
+    return foundParking;
   }
 }
 

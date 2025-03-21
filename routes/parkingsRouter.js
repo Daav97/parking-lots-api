@@ -3,6 +3,7 @@ import responses from '../util/responses.js';
 import { joiValitadorHandler } from '../middlewares/joiValidatorHandler.js';
 import { createParkingSchema } from '../schemas/parkingSchema.js';
 import ParkingsService from '../services/parkingsService.js';
+import Boom from '@hapi/boom';
 
 const router = express.Router();
 const service = new ParkingsService();
@@ -32,6 +33,12 @@ async function getAllParkings(req, res, next) {
 async function createParking(req, res, next) {
   try {
     const body = req.body;
+
+    const existingParking = await service.findByName(body.name);
+    if (existingParking) {
+      throw Boom.badRequest('Parking name already exists.');
+    }
+
     const newParking = await service.create(body);
     responses.success(res, {
       message: 'Created new parking lot',
