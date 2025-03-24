@@ -9,30 +9,35 @@ import {
 } from '../schemas/parkingSchema.js';
 import ParkingsService from '../services/parkingsService.js';
 import CustomError from '../errors/CustomError.js';
+import passport from 'passport';
 
 const router = express.Router();
 const service = new ParkingsService();
 
 router.get(
   '/',
+  passport.authenticate('jwt', { session: false }),
   joiValitadorHandler(queryParkingsSchema, 'query'),
   getAllParkings,
 );
 
 router.get(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
   joiValitadorHandler(getParkingSchema, 'params'),
   getParkingById,
 );
 
 router.post(
   '/',
+  passport.authenticate('jwt', { session: false }),
   joiValitadorHandler(createParkingSchema, 'body'),
   createParking,
 );
 
 router.patch(
   '/:id',
+  passport.authenticate('jwt', { session: false }),
   joiValitadorHandler(getParkingSchema, 'params'),
   joiValitadorHandler(updateParkingSchema, 'body'),
   updateParking,
