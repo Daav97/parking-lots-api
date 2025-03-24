@@ -4,7 +4,6 @@ const ERROR_STATUS = 'error';
 const success = (res, { message = '', statusCode = 200, data = {} }) => {
   res.status(statusCode).send({
     status: SUCCESS_STATUS,
-    statusCode: statusCode,
     message: message,
     data: data,
   });
@@ -12,11 +11,15 @@ const success = (res, { message = '', statusCode = 200, data = {} }) => {
 
 const error = (
   res,
-  { message = 'Internal server error', statusCode = 500 },
+  {
+    message = 'Something went wrong...',
+    statusCode = 500,
+    errorCode = 'INTERNAL_SERVER_ERROR',
+  } = {},
 ) => {
   res.status(statusCode).send({
     status: ERROR_STATUS,
-    errorCode: statusCode,
+    errorCode: errorCode,
     message: message,
   });
 };

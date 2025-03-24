@@ -11,6 +11,5 @@ REST API built with Express to manage parking lots.
 - Eslint
 - Prettier
 - Nodemon
-- Boom
 - Joi
 - dotenv

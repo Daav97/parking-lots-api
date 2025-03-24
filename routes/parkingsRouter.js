@@ -8,7 +8,6 @@ import {
   updateParkingSchema,
 } from '../schemas/parkingSchema.js';
 import ParkingsService from '../services/parkingsService.js';
-import Boom from '@hapi/boom';
 
 const router = express.Router();
 const service = new ParkingsService();
@@ -57,6 +56,15 @@ async function getParkingById(req, res, next) {
   try {
     const { id } = req.params;
     const parkingFound = await service.findById(id);
+
+    if (!parkingFound) {
+      responses.error(res, {
+        statusCode: 404,
+        errorCode: 'PARKING_NOT_FOUND',
+        message: 'Parking not found',
+      });
+    }
+
     responses.success(res, {
       message: 'Parking found successfully',
       data: parkingFound,
@@ -72,7 +80,11 @@ async function createParking(req, res, next) {
 
     const existingParking = await service.findByName(body.name);
     if (existingParking) {
-      throw Boom.badRequest('Parking name already exists.');
+      return responses.error(res, {
+        statusCode: 400,
+        errorCode: 'DUPLICATED_PARKING_NAME',
+        message: 'Parking name already exists.',
+      });
     }
 
     const newParking = await service.create(body);
@@ -90,6 +102,16 @@ async function updateParking(req, res, next) {
   try {
     const { id } = req.params;
     const body = req.body;
+
+    const parkingFound = await service.findById(id);
+
+    if (!parkingFound) {
+      responses.error(res, {
+        statusCode: 404,
+        errorCode: 'PARKING_NOT_FOUND',
+        message: 'Parking not found',
+      });
+    }
 
     const parkingUpdated = await service.update(id, body);
     responses.success(res, {

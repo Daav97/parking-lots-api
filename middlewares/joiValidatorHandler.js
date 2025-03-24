@@ -1,4 +1,4 @@
-import Boom from '@hapi/boom';
+import responses from '../util/responses.js';
 
 /**
  * Dynamic validator
@@ -12,7 +12,11 @@ export const joiValitadorHandler = (schema, property) => {
     const { error } = schema.validate(data, { abortEarly: false });
 
     if (error) {
-      next(Boom.badRequest(error));
+      return responses.error(res, {
+        errorCode: 'VALIDATION_SCHEMA_ERROR',
+        message: error.message,
+        statusCode: 400,
+      });
     }
     next();
   };
