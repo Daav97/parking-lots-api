@@ -1,4 +1,5 @@
 import { sequelize } from '../libs/sequelize.js';
+import CustomError from '../errors/CustomError.js';
 
 const { models } = sequelize;
 
@@ -39,6 +40,12 @@ class ParkingsService {
 
   async findById(id) {
     const parkingFound = await models.Parking.findByPk(id);
+    if (!parkingFound) {
+      throw CustomError.notFound({
+        errorCode: 'PARKING_NOT_FOUND',
+        message: 'Parking not found',
+      });
+    }
     return parkingFound;
   }
 

@@ -8,6 +8,7 @@ import {
   updateParkingSchema,
 } from '../schemas/parkingSchema.js';
 import ParkingsService from '../services/parkingsService.js';
+import CustomError from '../errors/CustomError.js';
 
 const router = express.Router();
 const service = new ParkingsService();
@@ -80,10 +81,9 @@ async function createParking(req, res, next) {
 
     const existingParking = await service.findByName(body.name);
     if (existingParking) {
-      return responses.error(res, {
-        statusCode: 400,
+      throw CustomError.badRequest({
         errorCode: 'DUPLICATED_PARKING_NAME',
-        message: 'Parking name already exists.',
+        message: 'Parking name already exists',
       });
     }
 
@@ -102,16 +102,6 @@ async function updateParking(req, res, next) {
   try {
     const { id } = req.params;
     const body = req.body;
-
-    const parkingFound = await service.findById(id);
-
-    if (!parkingFound) {
-      responses.error(res, {
-        statusCode: 404,
-        errorCode: 'PARKING_NOT_FOUND',
-        message: 'Parking not found',
-      });
-    }
 
     const parkingUpdated = await service.update(id, body);
     responses.success(res, {

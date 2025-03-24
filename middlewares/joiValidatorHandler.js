@@ -1,4 +1,4 @@
-import responses from '../util/responses.js';
+import CustomError from '../errors/CustomError.js';
 
 /**
  * Dynamic validator
@@ -12,10 +12,9 @@ export const joiValitadorHandler = (schema, property) => {
     const { error } = schema.validate(data, { abortEarly: false });
 
     if (error) {
-      return responses.error(res, {
-        errorCode: 'VALIDATION_SCHEMA_ERROR',
+      throw CustomError.badRequest({
         message: error.message,
-        statusCode: 400,
+        errorCode: 'VALIDATION_SCHEMA_ERROR',
       });
     }
     next();
