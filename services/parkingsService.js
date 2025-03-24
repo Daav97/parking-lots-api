@@ -38,7 +38,7 @@ class ParkingsService {
     return foundParking;
   }
 
-  async findOne(id) {
+  async findById(id) {
     const parkingFound = await models.Parking.findByPk(id);
     if (!parkingFound) {
       throw Boom.notFound('Parking not found');
@@ -47,7 +47,7 @@ class ParkingsService {
   }
 
   async update(id, changes) {
-    const parkingFound = await this.findOne(id);
+    const parkingFound = await this.findById(id);
     const parkingUpdated = await parkingFound.update(changes);
     return parkingUpdated;
   }

@@ -56,7 +56,7 @@ async function getAllParkings(req, res, next) {
 async function getParkingById(req, res, next) {
   try {
     const { id } = req.params;
-    const parkingFound = await service.findOne(id);
+    const parkingFound = await service.findById(id);
     responses.success(res, {
       message: 'Parking found successfully',
       data: parkingFound,
