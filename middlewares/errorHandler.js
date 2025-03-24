@@ -1,7 +1,9 @@
 import responses from '../util/responses.js';
 
 export const errorLogs = (err, req, res, next) => {
-  console.error(err);
+  if (!err.isCustomError) {
+    console.error(err);
+  }
   next(err);
 };
 
