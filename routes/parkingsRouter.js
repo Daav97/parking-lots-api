@@ -10,6 +10,7 @@ import {
 import ParkingsService from '../services/parkingsService.js';
 import CustomError from '../errors/CustomError.js';
 import passport from 'passport';
+import { checkRoles } from '../middlewares/authHandler.js';
 
 const router = express.Router();
 const service = new ParkingsService();
@@ -31,6 +32,7 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   joiValitadorHandler(createParkingSchema, 'body'),
   createParking,
 );
@@ -38,6 +40,7 @@ router.post(
 router.patch(
   '/:id',
   passport.authenticate('jwt', { session: false }),
+  checkRoles('admin'),
   joiValitadorHandler(getParkingSchema, 'params'),
   joiValitadorHandler(updateParkingSchema, 'body'),
   updateParking,
