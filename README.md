@@ -13,3 +13,4 @@ REST API built with Express to manage parking lots.
 - Nodemon
 - Joi
 - dotenv
+- bcryptjs
