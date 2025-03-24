@@ -6,7 +6,7 @@ const apiRouter = (app) => {
   const router = express.Router();
   app.use('/api', router);
   router.use('/parkings', parkingsRouter);
-  router.use('/actions', actionsRouter);
+  router.use(actionsRouter);
 };
 
 export default apiRouter;

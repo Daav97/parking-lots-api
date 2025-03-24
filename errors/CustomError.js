@@ -18,4 +18,8 @@ export default class CustomError {
   static notFound({ message = 'Not found', errorCode = 'NOT_FOUND' } = {}) {
     return new HttpError(message, 404, errorCode);
   }
+
+  static forbidden({ message = 'Forbidden', errorCode = 'FORBIDDEN' } = {}) {
+    return new HttpError(message, 403, errorCode);
+  }
 }
