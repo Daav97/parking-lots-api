@@ -15,3 +15,5 @@ REST API built with Express to manage parking lots.
 - dotenv
 - bcryptjs
 - jsonwebtoken
+- passport
+- passport-jwt

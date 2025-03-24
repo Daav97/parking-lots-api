@@ -12,6 +12,9 @@ const PORT = config.port;
 
 app.use(express.json());
 
+//Passport script:
+import './libs/passport/index.js';
+
 apiRouter(app);
 
 app.use(errorLogs);
