@@ -5,6 +5,10 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
+    "docker:postgres:up": "docker-compose up -d postgres",
+    "docker:postgres:down": "docker-compose down postgres",
+    "docker:pgadmin:up": "docker-compose up -d pgadmin",
+    "docker:pgadmin:down": "docker-compose down pgadmin",
     "lint": "eslint"
   },
   "keywords": [],
