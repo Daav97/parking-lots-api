@@ -17,3 +17,5 @@ REST API built with Express to manage parking lots.
 - jsonwebtoken
 - passport
 - passport-jwt
+- jest
+- supertest
