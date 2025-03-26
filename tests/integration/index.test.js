@@ -1,5 +1,5 @@
-import './usersTest';
-import './authTest';
+import './usersTests';
+import './authTests';
 import UsersService from '../../services/usersService';
 import AuthService from '../../services/authService';
 
