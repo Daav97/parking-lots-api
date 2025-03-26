@@ -24,3 +24,9 @@ services:
       - .env.test
     ports:
       - "5433:5432"
+
+  api:
+    build: .
+    container_name: express_api
+    ports:
+      - "3000:3000"
