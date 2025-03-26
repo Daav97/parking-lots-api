@@ -16,3 +16,11 @@ services:
       - .env
     ports:
       - "5050:80"
+
+  postgres_test:
+    image: postgres
+    container_name: postgres-test-container
+    env_file:
+      - .env.test
+    ports:
+      - "5433:5432"
