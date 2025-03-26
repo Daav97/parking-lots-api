@@ -1,4 +1,5 @@
 import './usersTest';
+import './authTest';
 import UsersService from '../../services/usersService';
 import AuthService from '../../services/authService';
 
