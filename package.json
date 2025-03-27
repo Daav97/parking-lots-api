@@ -13,7 +13,7 @@
     "docker:pgadmin:up": "docker-compose up -d pgadmin",
     "docker:pgadmin:down": "docker-compose down pgadmin",
     "lint": "eslint",
-    "test": "cross-env NODE_ENV=test jest --runInBand"
+    "test": "cross-env NODE_ENV=test jest --runInBand --detectOpenHandles"
   },
   "keywords": [],
   "author": "Diego Alvarez",
